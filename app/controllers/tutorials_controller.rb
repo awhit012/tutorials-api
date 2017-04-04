@@ -2,8 +2,13 @@ class TutorialsController < ApplicationController
 	before_action :set_tutorial, only: [:show, :update, :destroy]
 
   def index
-    @tutorials = Tutorial.all
-    json_response(@tutorials)
+
+    if params[:user_id]
+      @tutorials = User.find(params[:user_id]).tutorials
+    else
+      @tutorials = Tutorial.all
+    end
+    json_response(@tutorials)   
   end
 
   def create

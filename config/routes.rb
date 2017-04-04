@@ -8,4 +8,7 @@ Rails.application.routes.draw do
 			end
 		end
 	end
+
+	get 'tutorials' => 'tutorials#index', as: :tutorials
+
 end
