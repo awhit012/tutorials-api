@@ -7,10 +7,28 @@ RSpec.describe 'Tutorials API', type: :request do
   let!(:tutorials) { create_list(:tutorial, 10) }
   let(:tutorial_id) { tutorials.first.id }
 
-  # Test suite for GET /users/:id/tutorials
+  # Test suite for GET /tutorials
+  describe 'GET /tutorials' do
+    # make HTTP get request before each example
+    before { get "/tutorials" }
+
+    it 'returns tutorials' do
+      # Note `json` is a custom helper to parse JSON responses
+      expect(json).not_to be_empty
+      expect(json.size).to eq(10)
+    end
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
+    end
+  end
+
+   # Test suite for GET /users/:id/tutorials
+  let!(:tutorials) { create_list(:tutorial, 10, user_id: user_id) }
+
   describe 'GET /users/:id/tutorials' do
     # make HTTP get request before each example
-    before { get "/users/#{:user_id}/tutorials" }
+    before { get "/users/#{user_id}/tutorials" }
 
     it 'returns tutorials' do
       # Note `json` is a custom helper to parse JSON responses
