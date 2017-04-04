@@ -37,7 +37,7 @@ RSpec.describe 'Users API', type: :request do
     end
 
     context 'when the record does not exist' do
-      let(:user_id) { 100 }
+      let(:user_id) { 1000 }
 
       it 'returns status code 404' do
         expect(response).to have_http_status(404)

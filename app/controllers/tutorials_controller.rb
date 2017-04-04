@@ -33,7 +33,7 @@ class TutorialsController < ApplicationController
   private
 
   def tutorial_params
-    params.permit(:title, :description, :url)
+    params.permit(:title, :description, :url, :tag_list)
   end
 
   def set_tutorial
