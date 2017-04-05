@@ -69,13 +69,13 @@ RSpec.describe 'Tutorials API', type: :request do
     end
   end
 
-  # Test suite for POST /users/:id/tutorials
-  describe 'POST /users/:id/tutorials' do
+  # Test suite for POST /tutorials
+  describe 'POST /tutorials' do
     # valid payload
     let(:valid_attributes) { { title: 'Learn Elm', description: 'Takes you from 0 to hero', url: 'www.itdo.com' } }
 
     context 'when the request is valid' do
-      before { post "/users/#{:user_id}/tutorials", params: valid_attributes }
+      before { post "/tutorials", params: valid_attributes }
 
       it 'creates a tutorial' do
         expect(json['title']).to eq('Learn Elm')
@@ -87,7 +87,7 @@ RSpec.describe 'Tutorials API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post "/users/#{:user_id}/tutorials", params: { title: 'Foobar' } }
+      before { post "/tutorials", params: { title: 'Foobar' } }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
