@@ -9,11 +9,11 @@ RSpec.describe 'Reviews API', type: :request do
   let!(:reviews) { create_list(:review, 10, tutorial_id: tutorial_id)}
   let(:review_id) { reviews.first.id }
 
-  # Test suite for GET /users/:id/tutorials/:id/reviews
-  describe 'GET /users/:id/tutorials/:id/reviews' do
+  # Test suite for GET /tutorials/:id/reviews
+  describe 'GET /tutorials/:id/reviews' do
 
     # make HTTP get request before each example
-    before { get "/users/#{user_id}/tutorials/1/reviews" }
+    before { get "/tutorials/1/reviews" }
 
     it 'returns reviews' do
       # Note `json` is a custom helper to parse JSON responses
@@ -26,9 +26,9 @@ RSpec.describe 'Reviews API', type: :request do
     end
   end
 
-  # Test suite for GET /users/:id/tutorials/:id/reviews/:id
-  describe 'GET /users/:id/tutorials/:id/reviews/:id' do
-    before { get "/users/#{user_id}/tutorials/#{tutorial_id}/reviews/#{review_id}" }
+  # Test suite for GET /tutorials/:id/reviews/:id
+  describe 'GET /tutorials/:id/reviews/:id' do
+    before { get "/tutorials/#{tutorial_id}/reviews/#{review_id}" }
 
     context 'when the record exists' do
       it 'returns the rating' do
@@ -54,13 +54,13 @@ RSpec.describe 'Reviews API', type: :request do
     end
   end
 
-  # Test suite for POST /users/:id/tutorials/:id/reviews
-  describe 'POST /users/:id/tutorials/:id/reviews' do
+  # Test suite for POST /tutorials/:id/reviews
+  describe 'POST /tutorials/:id/reviews' do
     # valid payload
     let(:valid_attributes) { { title: "A pretty great tutorial", content: "I've gone through quite a few tutorials and this is the best" } }
 
     context 'when the request is valid' do
-      before { post "/users/#{user_id}/tutorials/#{tutorial_id}/reviews/", params: valid_attributes }
+      before { post "/tutorials/#{tutorial_id}/reviews/", params: valid_attributes }
       it 'creates a tutorial' do
         expect(json['title']).to eq("A pretty great tutorial")
       end
@@ -71,7 +71,7 @@ RSpec.describe 'Reviews API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post "/users/#{user_id}/tutorials/#{tutorial_id}/reviews/", params: { title: "A pretty great tutorial"} }
+      before { post "/tutorials/#{tutorial_id}/reviews/", params: { title: "A pretty great tutorial"} }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -84,12 +84,12 @@ RSpec.describe 'Reviews API', type: :request do
     end
   end
 
-  # Test suite for PUT /users/:id/tutorials/:id/reviews/:id
-  describe 'PUT /users/:id/tutorials/:id/reviews/:id' do
+  # Test suite for PUT /tutorials/:id/reviews/:id
+  describe 'PUT /tutorials/:id/reviews/:id' do
     let(:valid_attributes) { { title: "A pretty OK tutorial" } }
 
     context 'when the record exists' do
-      before { put "/users/#{user_id}/tutorials/#{tutorial_id}/reviews/#{review_id}", params: valid_attributes }
+      before { put "/tutorials/#{tutorial_id}/reviews/#{review_id}", params: valid_attributes }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -101,9 +101,9 @@ RSpec.describe 'Reviews API', type: :request do
     end
   end
 
-  # Test suite for DELETE /users/:id/tutorials/:id
-  describe 'DELETE /users/:id/tutorials/:id/reviews/:id' do
-    before { delete "/users/#{user_id}/tutorials/#{tutorial_id}/reviews/#{review_id}" }
+  # Test suite for DELETE /tutorials/:id
+  describe 'DELETE /tutorials/:id/reviews/:id' do
+    before { delete "/tutorials/#{tutorial_id}/reviews/#{review_id}" }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

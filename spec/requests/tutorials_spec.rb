@@ -23,27 +23,10 @@ RSpec.describe 'Tutorials API', type: :request do
     end
   end
 
-   # Test suite for GET /users/:id/tutorials
-  let!(:tutorials) { create_list(:tutorial, 10, user_id: user_id) }
 
-  describe 'GET /users/:id/tutorials' do
-    # make HTTP get request before each example
-    before { get "/users/#{user_id}/tutorials" }
-
-    it 'returns tutorials' do
-      # Note `json` is a custom helper to parse JSON responses
-      expect(json).not_to be_empty
-      expect(json.size).to eq(10)
-    end
-
-    it 'returns status code 200' do
-      expect(response).to have_http_status(200)
-    end
-  end
-
-  # Test suite for GET /users/:id/tutorials/:id
-  describe 'GET /users/:id/tutorials/:id' do
-    before { get "/users/#{user_id}/tutorials/#{tutorial_id}" }
+  # Test suite for GET /tutorials/:id
+  describe 'GET /tutorials/:id' do
+    before { get "/tutorials/#{tutorial_id}" }
 
     context 'when the record exists' do
       it 'returns the tutorial' do
@@ -100,12 +83,12 @@ RSpec.describe 'Tutorials API', type: :request do
     end
   end
 
-  # Test suite for PUT /users/:id/tutorials/:id
-  describe 'PUT /users/:id/tutorials/:id' do
+  # Test suite for PUT /tutorials/:id
+  describe 'PUT /tutorials/:id' do
     let(:valid_attributes) { { title: 'Learn AngularJS' } }
 
     context 'when the record exists' do
-      before { put "/users/#{user_id}/tutorials/#{tutorial_id}", params: valid_attributes }
+      before { put "/tutorials/#{tutorial_id}", params: valid_attributes }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -117,9 +100,9 @@ RSpec.describe 'Tutorials API', type: :request do
     end
   end
 
-  # Test suite for DELETE /users/:id/tutorials/:id
-  describe 'DELETE /users/:id/tutorials/:id' do
-    before { delete "/users/#{user_id}/tutorials/#{tutorial_id}" }
+  # Test suite for DELETE /tutorials/:id
+  describe 'DELETE /tutorials/:id' do
+    before { delete "/tutorials/#{tutorial_id}" }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
