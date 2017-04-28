@@ -4,9 +4,11 @@ Rails.application.routes.draw do
 	resources :users
 	
 	resources :tutorials do 
-		resources :ratings do 
-		end
 		resources :reviews do 
 		end
 	end
+
+	post '/tutorials/:id/upvote', to: 'tutorial_votes#upvote'
+	post '/tutorials/:id/downvote', to: 'tutorial_votes#downvote'
+
 end

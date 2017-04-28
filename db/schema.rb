@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404020638) do
+ActiveRecord::Schema.define(version: 20170410225335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "ratings", force: :cascade do |t|
-    t.integer  "tutorial_id"
-    t.integer  "value"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "user_id"
-    t.index ["tutorial_id"], name: "index_ratings_on_tutorial_id", using: :btree
-    t.index ["user_id"], name: "index_ratings_on_user_id", using: :btree
-  end
 
   create_table "reviews", force: :cascade do |t|
     t.integer  "tutorial_id"
@@ -97,8 +87,20 @@ ActiveRecord::Schema.define(version: 20170404020638) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
 
-  add_foreign_key "ratings", "tutorials"
-  add_foreign_key "ratings", "users"
+  create_table "votes", force: :cascade do |t|
+    t.string   "votable_type"
+    t.integer  "votable_id"
+    t.string   "voter_type"
+    t.integer  "voter_id"
+    t.boolean  "vote_flag"
+    t.string   "vote_scope"
+    t.integer  "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope", using: :btree
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope", using: :btree
+  end
+
   add_foreign_key "reviews", "tutorials"
   add_foreign_key "reviews", "users"
   add_foreign_key "tutorials", "users"

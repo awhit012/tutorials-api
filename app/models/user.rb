@@ -5,6 +5,5 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
 	has_many :tutorials, dependent: :destroy
-	has_many :ratings, dependent: :destroy
 	has_many :reviews, dependent: :destroy
 end

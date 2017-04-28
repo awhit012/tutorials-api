@@ -2,22 +2,21 @@ class TutorialsController < ApplicationController
 	before_action :set_tutorial, only: [:show, :update, :destroy]
 
   def index
-
     if params[:user_id]
       @tutorials = User.find(params[:user_id]).tutorials
     else
       @tutorials = Tutorial.all
     end
-    json_response(@tutorials)   
+    json_response(@tutorials, :ok, [:get_upvotes, :get_downvotes])   
   end
 
   def create
     @tutorial = Tutorial.create!(tutorial_params)
-    json_response(@tutorial, :created)
+    json_response(@tutorial, :ok)
   end
 
   def show
-    json_response(@tutorial)
+    json_response(@tutorial, :ok, [:reviews, :get_upvotes, :get_downvotes])
   end
 
   def update
